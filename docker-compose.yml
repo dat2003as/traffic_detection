@@ -1,0 +1,28 @@
+
+services:
+  # --- BACKEND ---
+  backend:
+    container_name: traffic_backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/storage:/app/storage
+    env_file:
+      - ./backend/.env
+    environment:
+      - CORS_ORIGINS=*
+    restart: always
+
+  # --- FRONTEND ---
+  frontend:
+    container_name: traffic_frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3002:80"
+    depends_on:
+      - backend

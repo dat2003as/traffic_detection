@@ -1,0 +1,31 @@
+model_name: YOLOv8s Helmet Detection
+version: v1.0
+trained_date: 2024-11-19
+training_epochs: 100
+dataset_size: 7000+ images
+
+performance:
+  map50: 0.965
+  map50_95: 0.587
+  precision: 0.941
+  recall: 0.754
+  
+classes:
+  1: DHelmet
+  2: DNoHelmet
+  3: P1Helmet
+  4: P1NoHelmet
+  5: P2NoHelmet
+  6: motorbike
+  
+training_config:
+  model_size: yolov8s
+  image_size: 640
+  batch_size: 32
+  optimizer: AdamW
+  device: GPU (T4)
+
+usage:
+  confidence_threshold: 0.5
+  iou_threshold: 0.45
+  inference_time: 30-50ms (GPU)

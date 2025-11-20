@@ -1,0 +1,75 @@
+# ================================
+# BACKEND DEPENDENCIES
+# Traffic Violation Detection System
+# ================================
+
+# FastAPI & Server
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+# Machine Learning
+ultralytics==8.1.0
+torch==2.1.2
+torchvision==0.16.2
+opencv-python==4.9.0.80
+opencv-python-headless==4.9.0.80
+pillow==10.2.0
+numpy==1.26.3
+
+# Data Validation & Settings
+pydantic==2.3.0 
+pydantic-settings==2.2.1 
+PyYAML==6.0
+
+python-dotenv==1.0.0
+# Database (Optional)
+sqlalchemy==2.0.25
+alembic==1.13.1
+asyncpg==0.29.0  # For PostgreSQL
+aiosqlite==0.19.0  # For SQLite
+
+# Caching (Optional)
+redis==5.0.1
+aioredis==2.0.1
+
+# File Storage
+aiofiles==23.2.1
+asyncpg==0.29.0
+
+# Video Processing
+imageio==2.33.1
+imageio-ffmpeg==0.4.9
+
+# HTTP & WebSocket
+websockets==12.0
+
+# Background Tasks (Optional)
+celery==5.3.6
+flower==2.0.1  # Celery monitoring
+
+# Monitoring & Logging
+python-json-logger==2.0.7
+loguru==0.7.2
+
+# Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Rate Limiting
+slowapi==0.1.9
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+httpx==0.26.0  # For testing async endpoints
+
+# Development
+black==24.1.1
+flake8==7.0.0
+mypy==1.8.0
+pre-commit==3.6.0
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2024.1
