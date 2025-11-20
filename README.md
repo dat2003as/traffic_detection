@@ -32,8 +32,3 @@ Hệ thống giải quyết các vấn đề đặc thù của camera giao thôn
 ![Confusion Matrix](./assets/confusion_matrix.png)
 *Mô hình phân biệt rất tốt giữa các lớp (ví dụ: DNoHelmet vs P1NoHelmet), tỷ lệ nhầm lẫn cực thấp.*
 
-### 3. Kết quả thực tế trên CCTV (Inference Demo)
-| Tình huống | Kết quả |
-| :--- | :--- |
-| **Đông đúc & Che khuất** | ![Demo 1](./assets/val_batch0_pred.jpg) |
-| **Góc nhìn cao (Top-down)** | ![Demo 2](./assets/val_batch1_pred.jpg) |
