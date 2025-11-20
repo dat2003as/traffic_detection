@@ -2,12 +2,14 @@
 General Helper Functions
 """
 import glob
+import os
 import uuid
 import hashlib
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict
 import json
+import cv2
 from fastapi import status
 
 from fastapi import HTTPException
@@ -86,25 +88,37 @@ def _count_violations_by_type(violations: list) -> dict:
     return counts
 
 def _find_video_path(video_id: str) -> str:
-    """Find video file path by video ID."""
-    video_folder = Path(settings.UPLOAD_DIR) / "videos"
+    # Tìm file trong upload dir
+    # Logic tìm file khớp với video_id
+    upload_dir = settings.UPLOAD_DIR
+    # Nếu upload_dir là tương đối, chuyển sang tuyệt đối để tìm cho chắc
+    if not os.path.isabs(upload_dir):
+        upload_dir = os.path.join(os.getcwd(), upload_dir)
+        
+    for fname in os.listdir(upload_dir):
+        if fname.startswith(video_id):
+            return os.path.join(upload_dir, fname)
+    raise FileNotFoundError(f"Video {video_id} not found")
 
-    pattern = str(video_folder / f"{video_id}_*")
-
-    video_files = glob.glob(pattern)
-
-    if not video_files:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Video {video_id} not found"
-        )
-
-    return video_files[0]
-
-
-def _get_output_path(task_id: str) -> str:
-    """Get output path for processed video."""
-    return str(Path(settings.PROCESSED_DIR) / f"{task_id}_annotated.mp4")
+def get_video_info(video_path: str) -> dict:
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise ValueError("Cannot open video file")
+    
+    info = {
+        "path": video_path,
+        "fps": cap.get(cv2.CAP_PROP_FPS),
+        "width": int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
+        "height": int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)),
+        "total_frames": int(cap.get(cv2.CAP_PROP_FRAME_COUNT)),
+        "codec": int(cap.get(cv2.CAP_PROP_FOURCC)),
+        "duration_seconds": 0
+    }
+    if info["fps"] > 0:
+        info["duration_seconds"] = info["total_frames"] / info["fps"]
+        
+    cap.release()
+    return info
 
 
 def _sse_event(data: dict) -> str:
